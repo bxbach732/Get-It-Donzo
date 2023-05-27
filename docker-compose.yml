@@ -22,6 +22,16 @@ services:
       - ./server/.env
     networks:
       - app
+  # frontend:
+  #   build: ./client
+  #   stdin_open: true
+  #   restart: "always"
+  #   ports: 
+  #     - "3000:3000"
+  #   depends_on: 
+  #     - backend
+  #   networks:
+  #     - app
 volumes:
   postgres_data:
     driver: local
