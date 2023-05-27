@@ -15,7 +15,7 @@ const getTokenFrom = (req: Request) => {
 
 const listAll = async (_req: Request, res: Response) => {
     const todos = await db.raw('SELECT * FROM todos;');
-    res.status(200).json(todos.rows);
+    return res.status(200).send(todos.rows);
 };
 
 const listTodo = async (req: Request, res: Response) => {
@@ -24,7 +24,7 @@ const listTodo = async (req: Request, res: Response) => {
         req.params.id
     );
     if (todo.rowCount !== 0) {
-        res.status(200).send(todo.rows);
+        res.status(200).send(todo.rows[0]);
     } else {
         res.status(404).send({'message': 'not found'});
     }
@@ -56,7 +56,7 @@ const createTodo = async (req: Request, res: Response) => {
             VALUES (?, ?, ?);`, 
             [title, description, user.id]
         );
-        return res.status(200).send(newTodo.rows);
+        return res.status(200).send(newTodo.rows[0]);
     } catch(error) {
         return res.status(500).send({"message": "invalid request"});
     }
@@ -71,7 +71,7 @@ const updateTodo = async (req: Request, res: Response) => {
             WHERE id = ?`, 
             [title, description, completed, req.params.id]
         );
-        res.status(200).send(updatedTodo);
+        res.status(200).send(updatedTodo.rows[0]);
     } catch(error) {
         res.status(500).send({"message": "invalid request"});
     }
@@ -83,7 +83,7 @@ const deleteTodo = async (req: Request, res: Response) => {
             DELETE FROM todos WHERE id = ?;`, 
             req.params.id
         );
-        res.status(200).send(deletedTodo);
+        res.status(200).send(deletedTodo.rows[0]);
     } catch(error) {
         res.status(404).send({"message": "Can't find todo with the id"});
     }
