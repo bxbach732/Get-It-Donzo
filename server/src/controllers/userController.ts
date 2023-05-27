@@ -1,5 +1,6 @@
 import db from '../db/database';
 import { Response, Request} from 'express';
+import bcrypt from 'bcrypt';
 
 const listAll = async (_req: Request, res: Response) => {
     const users = await db.raw('SELECT * FROM users;');
@@ -15,7 +16,7 @@ const listUser = async (req: Request, res: Response) => {
         res.status(200).json(user.rows);
     } else {
         res.status(404).send({'message': 'not found'});
-    };
+    }
 };
 
 const listTodosByUser = async (req: Request, res: Response) => {
@@ -27,19 +28,22 @@ const listTodosByUser = async (req: Request, res: Response) => {
         res.status(200).json(user.rows);
     } else {
         res.status(404).send({'message': 'not found'});
-    };
+    }
 };
 
 const createUser = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
     try {
         const newUser = await db.raw(`
             INSERT INTO users (name, email, password) 
             VALUES (?,?,?);`, 
-            [name, email, password]
+            [name, email, passwordHash]
         );
-        res.status(200).send(newUser.rows);
+        res.status(201).send(newUser.rows);
     } catch(error) {
+        console.log(error);
         res.status(500).send({"message": "invalid request"});
     };
 };
@@ -77,4 +81,4 @@ export default {
     createUser,
     updateUser,
     deleteUser
-}
+};
