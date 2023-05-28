@@ -1,0 +1,14 @@
+services:
+  - name: backend
+    buildCommand: npm run tsc
+    startCommand: npm run start
+    env:
+      - key: PORT
+        value: "7777"
+
+  - name: frontend
+    buildCommand: npm run build && cp -r build ../server/
+    startCommand: npm run start
+    env:
+      - key: PORT
+        value: "3000"

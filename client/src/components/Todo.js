@@ -1,11 +1,11 @@
-const Todo = ({ todo, toggleImportance }) => {
+const Todo = ({ todo, toggleCompleted }) => {
     const label = todo.completed 
-      ? 'Complete' 
-      : 'Redo';
+      ? 'redo' 
+      : 'complete';
   
     return (
-      <div className='todo' style={styles.title}>
-        {todo.title} <button onClick={toggleImportance}>{label}</button>
+      <div className='todo'>
+        {todo.title} <button onClick={toggleCompleted}>{label}</button>
         <p style={styles.description}>{todo.description} </p>
       </div>
     )

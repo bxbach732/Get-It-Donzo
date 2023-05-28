@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react'
+import LoginForm from './components/LoginForm';
+import TodoForm from './components/TodoForm';
 import Todo from './components/Todo';
+import Togglable from './components/Togglable';
 import Notification from './components/Notification';
 import Footer from './components/Footer';
+
 import todoService from './services/todos';
 import loginService from './services/login';
 
 const App = () => {
   const [todos, setTodos] = useState([]);
-  const [newTodoTitle, setNewTodoTitle] = useState('');
-  const [newTodoDescription, setNewTodoDescription] = useState('');
-
   const [showAll, setShowAll] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -36,27 +37,15 @@ const App = () => {
     }
   }, [])
 
-  const addTodo = (event) => {
-    event.preventDefault()
-    const todoObject = {
-      title: newTodoTitle,
-      description: newTodoDescription,
-    }
+  const todoFormRef = useRef();
 
+  const addTodo = (todoObject) => {
     todoService
       .create(todoObject)
-        .then(returnedTodo => {
-        setTodos(todos.concat(returnedTodo))
-        setNewTodoTitle('');
-        setNewTodoDescription('');
+      .then(returnedTodo => {
+        setTodos(todos.concat(returnedTodo));
+        todoFormRef.current.toggleVisibility()
       })
-  }
-
-  const handleTodoChange = (event) => {
-    setNewTodoTitle(event.target.value)
-  }
-  const handleDescriptionChange = (event) => {
-    setNewTodoDescription(event.target.value)
   }
 
   const handleLogin = async (event) => {
@@ -65,11 +54,11 @@ const App = () => {
     try {
       const user = await loginService.login({
         email, password,
-      })
+      });
+      todoService.setToken(user.token);
       window.localStorage.setItem(
         'loggedTodoUser', JSON.stringify(user)
       ) 
-      todoService.setToken(user.token);
       setUser(user);
       setEmail('');
       setPassword('');
@@ -103,51 +92,31 @@ const App = () => {
         setTodos(todos.filter(n => n.id !== id))
       })
   }
-  
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        Email
-          <input
-          type="text"
-          value={email}
-          name="Email"
-          onChange={({ target }) => setEmail(target.value)}
-        />
-      </div>
-      <div>
-        Password
-          <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>      
-  )
-
-  const todoForm = () => (
-    <form onSubmit={addTodo}>
-      Task: <input value={newTodoTitle} onChange={handleTodoChange} /> <br></br>
-      Description: <input value={newTodoDescription} onChange={handleDescriptionChange} />
-      <button type="submit">Save</button>
-    </form>  
-  )
 
   return (
     <div>
       <h1>Todo app</h1>
       <Notification message={errorMessage} />
 
-      {!user && loginForm()} 
-      {user && <div>
-        <p>{user.name}({user.email}) logged in</p>
-          {todoForm()}
+      {!user &&
+        <Togglable buttonLabel="Log in">
+          <LoginForm
+            email={email}
+            password={password}
+            handleEmailChange={({ target }) => setEmail(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
+          />
+        </Togglable>
+      }
+      {user &&
+        <div>
+          <p>{user.name} logged in</p>
+          <Togglable buttonLabel="new todo" ref={todoFormRef}>
+            <TodoForm createTodo={addTodo} />
+          </Togglable>
         </div>
       }
-
 
       <div>
         <button onClick={() => setShowAll(!showAll)}>
@@ -159,7 +128,7 @@ const App = () => {
           <Todo
             key={todo.id}
             todo={todo}
-            toggleImportance={() => toggleCompleted(todo.id)}
+            toggleCompleted={() => toggleCompleted(todo.id)}
           />
         )}
       </ul>
