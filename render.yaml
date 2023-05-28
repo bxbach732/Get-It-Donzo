@@ -3,7 +3,7 @@ services:
     type: web
     buildCommand: npm run tsc
     startCommand: npm run start
-    env:
+    envVars:
       - key: PORT
         value: "7777"
 
@@ -11,6 +11,6 @@ services:
     type: web
     buildCommand: npm run build && cp -r build ../server/
     startCommand: npm run start
-    env:
+    envVars:
       - key: PORT
         value: "3000"
