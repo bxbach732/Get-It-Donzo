@@ -1,17 +1,8 @@
-import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import db from '../db/database';
 import { Response, Request} from 'express';
 
 dotenv.config();
-
-const getTokenFrom = (req: Request) => {
-    const authorization = req.get('authorization');
-    if (authorization && authorization.startsWith('Bearer ')) {
-      return authorization.replace('Bearer ', '');
-    }
-    return null;
-};
 
 const listAll = async (_req: Request, res: Response) => {
     const todos = await db.raw('SELECT * FROM todos;');
@@ -32,29 +23,12 @@ const listTodo = async (req: Request, res: Response) => {
 
 const createTodo = async (req: Request, res: Response) => {
     const { title, description } = req.body;
-    const secret = process.env.SECRET || 'DEFAULT_SECRET';
-    const token = getTokenFrom(req);
-
-    if (!token) {
-        return res.status(401).json({ error: 'token invalid' });
-    }
 
     try {
-        const decodedToken = jwt.verify(token, secret);
-    
-        if (typeof decodedToken === 'string' || !decodedToken.id) {
-            return res.status(401).json({ error: 'token invalid' });
-        }
-        const user = (await db.raw(`
-            SELECT * FROM users 
-            WHERE id = ?;`,
-            decodedToken.id
-        )).rows[0];
-
         const newTodo = await db.raw(`
             INSERT INTO todos (title, description, user_id) 
             VALUES (?, ?, ?);`, 
-            [title, description, user.id]
+            [title, description, req.params.id]
         );
         return res.status(200).send(newTodo.rows[0]);
     } catch(error) {

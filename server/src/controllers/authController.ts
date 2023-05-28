@@ -13,16 +13,14 @@ const userLogin = async (req: Request, res: Response) => {
         SELECT * FROM users WHERE email = ?;`, 
         email
     )).rows[0];
-
-    console.log(user);
-
+    try {
     const passwordCorrect = user === null
         ? false
         : await bcrypt.compare(password, user.password);
 
     if (!(user && passwordCorrect)) {
         return res.status(401).json({
-            error: 'invalid email or password'
+            error: 'Invalid email or password'
         });
     }
 
@@ -34,6 +32,9 @@ const userLogin = async (req: Request, res: Response) => {
     const token = jwt.sign(userForToken, secret);
 
     return res.status(200).send({ token, email: user.email, name: user.name });
+    } catch (error) {
+        return res.status(500).send({"message": "invalid request"});
+    }
 };
 
 export default {

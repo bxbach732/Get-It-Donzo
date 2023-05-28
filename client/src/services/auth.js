@@ -4,7 +4,12 @@ const baseUrl = window.location.hostname === "localhost" ? "http://localhost:777
 
 const login = async credentials => {
   const response = await axios.post(`${baseUrl}/api/login`, credentials)
-  return response.data
+  return response.data;
 }
 
-export default { login }
+const register = async credentials => {
+  const response = await axios.post(`${baseUrl}/api/users`, credentials)
+  return response.data;
+}
+
+export default { login, register }
