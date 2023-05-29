@@ -23,6 +23,7 @@
       <a href="#about-the-project">About The Project</a>
       <ul>
         <li><a href="#built-with">Built With</a></li>
+        <li><a href="#endpoints">Endpoints</a></li>
       </ul>
     </li>
     <li>
@@ -66,7 +67,23 @@ The Node/Express backend is built using TypeScript. JavaScript is used for devel
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Endpoints
+| Request                  | Description                                                                                                             |
+|--------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| POST /api/login          | User login                                                                                                              |
+| GET /api/todos           | Get all to-do entries                                                                                                   |
+| GET /api/todos/:id       | Get a specific to-do entry                                                                                              |
+| POST /api/todos          | Create a new to-do entry                                                                                                |
+| PUT /api/todos/:id       | Update a specific to-do entry                                                                                           |
+| DELETE /api/todos/:id    | Delete a specific to-do entry                                                                                           |
+| GET /api/users           | Get all users                                                                                                           |
+| GET /api/users/:id       | Get a specific user                                                                                                     |
+| GET /api/users/:id/todos | Get all to-do entries of this user                                                                                      |
+| POST /api/users          | Create a new user                                                                                                       |
+| PUT /api/users/:id       | Update a specific user                                                                                                  |
+| DELTE /api/users/:id     | Delete a specific user                                                                                                  |
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -75,6 +92,9 @@ This is the instruction of how to set up and run this project locally.
 ### Prerequisites
 There are 2 ways to build and run this application: the first way is by using Docker (recommended) and the second way is to use npm. Go to the server subfolder of the project, create a .env file, and fill it according to the example file .env.example (Note: if you user Docker, you can fill in whatever credentials you prefer but you'll have to use real credentials from a running PostgreSQL database if you choose to use npm).
 <br><br/> 
+
+### Installation
+
 #### Using Docker
 The first thing to do is to open Docker (install Docker if you don't already have it).
 1. Build the Docker image. Note that everytime you make a change, you will have to rebuild the Docker image again
