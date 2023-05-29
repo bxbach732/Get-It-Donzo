@@ -24,11 +24,7 @@ const listTodosByUser = async (req: Request, res: Response) => {
         SELECT * FROM todos WHERE user_id = ?;`, 
         req.params.id
     );
-    if (user.rowCount !== 0) {
-        res.status(200).json(user.rows);
-    } else {
-        res.status(404).send({'message': 'not found'});
-    }
+    return res.status(200).json(user.rows);
 };
 
 const createUser = async (req: Request, res: Response) => {

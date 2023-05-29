@@ -14,24 +14,24 @@ const userLogin = async (req: Request, res: Response) => {
         email
     )).rows[0];
     try {
-    const passwordCorrect = user === null
-        ? false
-        : await bcrypt.compare(password, user.password);
+        const passwordCorrect = user === null
+            ? false
+            : await bcrypt.compare(password, user.password);
 
-    if (!(user && passwordCorrect)) {
-        return res.status(401).json({
-            error: 'Invalid email or password'
-        });
-    }
+        if (!(user && passwordCorrect)) {
+            return res.status(401).json({
+                error: 'Invalid email or password'
+            });
+        }   
 
-    const userForToken = {
-        email: user.email,
-        id: user.id,
-    };
+        const userForToken = {
+            email: user.email,
+            id: user.id,
+        };
 
-    const token = jwt.sign(userForToken, secret);
+        const token = jwt.sign(userForToken, secret);
 
-    return res.status(200).send({ token, email: user.email, name: user.name });
+        return res.status(200).send({ token, email: user.email, name: user.name, id: user.id });
     } catch (error) {
         return res.status(500).send({"message": "invalid request"});
     }

@@ -4,6 +4,7 @@ import authService from '../services/auth';
 import Notification from './Notification';
 import { useNavigate } from 'react-router-dom';
 import authContext from './authContext';
+import todoService from '../services/todos';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -21,6 +22,12 @@ const LoginPage = () => {
             const user = await authService.login({
                 email, password,
             });
+            
+            todoService.setToken(user.token);
+            window.localStorage.setItem(
+                'loggedTodoUser', JSON.stringify(user)
+            ) 
+
             setUser(user);
             setEmail('');
             setPassword('');

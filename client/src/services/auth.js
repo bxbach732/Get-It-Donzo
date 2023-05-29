@@ -4,6 +4,7 @@ const baseUrl = window.location.hostname === "localhost" ? "http://localhost:777
 
 const login = async credentials => {
   const response = await axios.post(`${baseUrl}/api/login`, credentials)
+  console.log(response.data)
   return response.data;
 }
 

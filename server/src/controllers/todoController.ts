@@ -22,13 +22,13 @@ const listTodo = async (req: Request, res: Response) => {
 };
 
 const createTodo = async (req: Request, res: Response) => {
-    const { title, description } = req.body;
+    const { title, description, id } = req.body;
 
     try {
         const newTodo = await db.raw(`
             INSERT INTO todos (title, description, user_id) 
             VALUES (?, ?, ?);`, 
-            [title, description, req.params.id]
+            [title, description, id]
         );
         return res.status(200).send(newTodo.rows[0]);
     } catch(error) {
