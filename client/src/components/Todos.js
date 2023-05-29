@@ -80,26 +80,9 @@ const Todos = () => {
 
     return (
         <div>
-            <select onChange={() => setFilter(!showOngoing)}>
-                <option value='ongoing'>ongoing tasks</option>
-                <option value='completed'>completed task</option>
-            </select>
-            {todosToshow.map((todo)=> (
-                <div key={todo.id}>
-                    {/* <input onChange={() => toggleCompletion(todo.id)} type='checkbox'/>
-                    <label>{todo.title}: {todo.description}</label>
-                    <button>Delete</button> */}
-                    <Todo 
-                        title={todo.title} 
-                        description={todo.description} 
-                        toggleCompletion={() => toggleCompletion(todo.id)}
-                        handleDeletion={() => handleDeletion(todo.id)}
-                    />
-                </div>
-            ))}
-            <br/>
-            <form onSubmit={addTodo}>
+            <form className='add-form' onSubmit={addTodo}>
                 <input 
+                    placeholder='Title (required)' 
                     value={todoTitle} 
                     onChange={event => setTodoTitle(event.target.value)}
                 /> <br/>
@@ -108,8 +91,24 @@ const Todos = () => {
                     value={todoDescription} 
                     onChange={event => setTodoDescription(event.target.value)}
                 /> <br/>
-                <button type='submit'>Add</button>
+                <button className='add-button' type='submit'>Add</button>
             </form>
+            <div className='select'>
+                <select onChange={() => setFilter(!showOngoing)}>
+                    <option value='ongoing'>ongoing tasks</option>
+                    <option value='completed'>completed task</option>
+                </select>
+            </div>
+            {todosToshow.map((todo)=> (
+                <div key={todo.id}>
+                    <Todo 
+                        title={todo.title} 
+                        description={todo.description} 
+                        toggleCompletion={() => toggleCompletion(todo.id)}
+                        handleDeletion={() => handleDeletion(todo.id)}
+                    />
+                </div>
+            ))}
         </div>
     )
 }

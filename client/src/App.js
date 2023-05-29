@@ -11,7 +11,8 @@ import todoService from './services/todos';
 const App = () => {
     const [user, setUser] = useState(null);
     const padding = {
-        padding: 5
+        padding: 5,
+        color: 'white'
     }
 
     useEffect(() => {
@@ -32,12 +33,12 @@ const App = () => {
         <authContext.Provider value={[user, setUser]}>
         <div className='App'>
             <Router>
-                <div>
-                    <Link style={padding} to="/">home</Link>
-                    {!user && <Link style={padding} to="/login">login</Link>}
-                    {!user && <Link style={padding} to="/register">register</Link>}
-                    {user && <Link style={padding} onClick={handleLogout} >logout</Link>}
-                    {user && <div> {user.name} logged in</div> }
+                <div className='nav'>
+                    <Link style={padding} to="/">Homepage</Link>
+                    {!user && <Link style={padding} to="/login">Login</Link>}
+                    {!user && <Link style={padding} to="/register">Register</Link>}
+                    {user && <Link style={padding} onClick={handleLogout} >Logout</Link>}
+                    {user && <div className='status'> logged in as {user.name} </div> }
                 </div>
                 <Routes>
                     <Route path="/" element={<LandingPage />} />

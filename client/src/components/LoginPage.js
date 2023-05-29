@@ -43,24 +43,31 @@ const LoginPage = () => {
 
     return (
         <div>
+            <div>
+                <h1>Login</h1>
+                <form className='form'>
+                    <input 
+                        placeholder='email' 
+                        value={email} onChange={(event) => setEmail(event.target.value)}
+                    /> <br/>
+                    <input 
+                        type={visibleCheck}
+                        placeholder='password'
+                        value={password} onChange={(event) => setPassword(event.target.value)}
+                    /> <br/>
+                    <label className={"checkbox-label"}>
+                        <input 
+                            type="checkbox" className={"checkbox-input"}
+                            onClick={() => setVisible(!visible)} 
+                        />
+                        Show password 
+                    </label> <br/>
+                    <div>
+                        <button onClick={handleLogin}>Login</button>
+                    </div>
+                </form>
+            </div> 
             <Notification message={errorMessage} type={"error"}/>
-            <h1>Login</h1>
-            <form>
-                <input 
-                    placeholder='email' 
-                    value={email} onChange={(event) => setEmail(event.target.value)}
-                /> <br/>
-                <input 
-                    type={visibleCheck}
-                    placeholder='password'
-                    value={password} onChange={(event) => setPassword(event.target.value)}
-                /> <br/>
-                Show password
-                <input 
-                    type="checkbox" onClick={() => setVisible(!visible)} 
-                /> <br/>
-                <button onClick={handleLogin}>Login</button>
-            </form>
         </div>
     )
 }
