@@ -133,7 +133,7 @@ I chose to build a to-do list application because it's so simple but also very u
 
 <!-- ROADMAP -->
 ## Roadmap
-
+This is the current roadmap for future developments.
 - [ ] Implement testing.
 - [ ] Implement better way to handle authentication (currently localStorage based token)
 - [ ] Convert the frontend from Javascript to Typescript
