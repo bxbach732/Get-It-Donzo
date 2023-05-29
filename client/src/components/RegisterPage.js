@@ -17,7 +17,13 @@ const RegisterPage = () => {
     const handleRegister = async (event) => {
         try {
             event.preventDefault();
-
+            if (name === "" || email === "" || password === "") {
+                setErrorMessage('Please provide full information')
+                setTimeout(() => {
+                    setErrorMessage(null);
+                }, 4000)
+                return;
+            }
             const user = await authService.register({
                 name, email, password,
             });

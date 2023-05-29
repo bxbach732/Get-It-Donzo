@@ -66,10 +66,10 @@ body {
 
 .text-wrapper {
   display: inline-block;
-  width: 350px; 
-  padding: 5px;
+  width: 250px; 
+  padding: 2px;
   background-color: rgb(140, 220, 123);
-  border-radius: 5px;
+  border-radius: 0px;
   text-align: center;
   overflow-wrap: break-word;
   margin-top: 10px;
@@ -78,7 +78,7 @@ body {
 
 
 .add-button {
-  align-self: flex-end;
+  align-items: center;
   width: auto;
 }
 
@@ -87,10 +87,12 @@ body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
 }
 
 .add-form input {
   margin-right: 10px; 
+  width: 250px;
 }
 
 .status {
