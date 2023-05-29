@@ -48,7 +48,7 @@
 This todo-list application is the take-home assignment for the Slush Junior Web Developer position. 
 It was developed using the PERN stack (PostgreSQL, Express, React, and Node) and deployed to Render (https://get-it-donzo.onrender.com/). This is a fairly simple PERN stack application because the scope of the assignment is a 12-hour-to-make web application. 
 
-The Node/Express backend is built using TypeScript. JavaScript is used for developing the React frontend. The database uses the postgres Docker image and the data migration/seed processes are handled by Knexjs. The database for the deployment is hosted using ElephantSQL. 
+The Node/Express backend is built using TypeScript. JavaScript is used for developing the React frontend. The database uses the postgres Docker image and the data migration/seed processes are handled by Knexjs. The web pages are styled using the PaperCSS framework. Finally, the database for the deployment is hosted using ElephantSQL. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -81,23 +81,23 @@ The Node/Express backend is built using TypeScript. JavaScript is used for devel
 | GET /api/users/:id/todos | Get all to-do entries of this user                                                                                      |
 | POST /api/users          | Create a new user                                                                                                       |
 | PUT /api/users/:id       | Update a specific user                                                                                                  |
-| DELTE /api/users/:id     | Delete a specific user                                                                                                  |
+| DELETE /api/users/:id    | Delete a specific user                                                                                                  |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
-This is the instruction of how to set up and run this project locally.
+This is the instruction on how to set up and run this project locally.
 
 ### Prerequisites
-There are 2 ways to build and run this application: the first way is by using Docker (recommended) and the second way is to use npm. Go to the server subfolder of the project, create a .env file, and fill it according to the example file .env.example (Note: if you user Docker, you can fill in whatever credentials you prefer but you'll have to use real credentials from a running PostgreSQL database if you choose to use npm).
+There are 2 ways to build and run this application: the first way is by using Docker (recommended) and the second way is to use npm. Go to the server subfolder of the project, create a .env file, and fill it according to the example file .env.example (Note: if you use Docker, you can fill in whatever credentials you prefer but you'll have to use real credentials from a running PostgreSQL database if you choose to use npm).
 <br><br/> 
 
 ### Installation
 
 #### Using Docker
 The first thing to do is to open Docker (install Docker if you don't already have it).
-1. Build the Docker image. Note that everytime you make a change, you will have to rebuild the Docker image again
+1. Build the Docker image. Note that every time you make a change, you will have to rebuild the Docker image again
    ```sh
    docker-compose build
    ```
@@ -125,7 +125,7 @@ The first thing to do is to open Docker (install Docker if you don't already hav
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-I chose to build a to-do list application because it's so simple but also very usefull to people. The user can sign up, login, and use the application like a typical to-do list: they can create a todo entry, mark it as done, and delete it. 
+I chose to build a to-do list application because it's so simple but also very useful to people. The user can sign up, log in, and use the application like a typical to-do list: they can create a to-do entry, mark it as done, and delete it. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -135,9 +135,9 @@ I chose to build a to-do list application because it's so simple but also very u
 ## Roadmap
 This is the current roadmap for future developments.
 - [ ] Implement testing.
-- [ ] Implement better way to handle authentication (currently localStorage based token)
+- [ ] Implement better way to handle authentication (currently localStorage-based token)
 - [ ] Convert the frontend from Javascript to Typescript
-- [ ] Document the APIs using swager
+- [ ] Document the APIs using swagger
 - [ ] Implement CI/CD pipeline
 - [ ] Add more features to the application
     - [ ] Profile page
